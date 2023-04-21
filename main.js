@@ -9,38 +9,45 @@ async function getdata() {
         const pokemonInfoElement = document.createElement('div');
         pokemonDataElement.appendChild(pokemonInfoElement);
 
-        function showPokemonInfo() {
-            const pokemon = data.results[currentPokemonIndex];
-            fetch(pokemon.url)
-                .then(response => response.json())
-                .then(data => mostrarpokimos(data))
-                .catch(error => console.error(error));
+        async function showPokemonInfo() {
+            try {
+                const pokemon = data.results[currentPokemonIndex];
+                const response = await fetch(pokemon.url);
+                const pokemonData = await response.json();
+                mostrarpokimos(pokemonData);
+            } catch (error) {
+                console.error(error);
+            }
         }
 
-        function mostrarpokimos(pokemons){
-            const ws = new Worker("./storage/wsMyComponent.js",{type:"module"});
+        function mostrarpokimos(pokemons) {
+            const ws = new Worker("./storage/wsMyComponent.js", {
+                type: "module"
+            });
 
             //enviamos un mensaje el worker
-            ws.postMessage({module: "showPoke", data : pokemons});
+            ws.postMessage({
+                module: "showPoke",
+                data: pokemons
+            });
             let id = ["#pokemon-data"];
             let count = 0;
             //esto es lo que llega del worker
-            ws.addEventListener("message",(e)=>{
+            ws.addEventListener("message", (e) => {
 
                 //estamos parseando lo que trae el evento (mensaje)
                 let doc = new DOMParser().parseFromString(e.data, "text/html");
-                
+
                 //insertamos en nuestro index, en el selector #pingPongItems
                 document.querySelector(id[count]).append(...doc.body.children);
 
                 //finalizamos el worker
-                (id.length-1==count) ? ws.terminate():count++;
+                (id.length - 1 == count) ? ws.terminate(): count++;
             })
 
         }
         const prevButton = document.createElement('button');
         prevButton.innerHTML = 'Anterior';
-        pokemonList.splice(currentPokemonIndex, 1);
         prevButton.addEventListener('click', () => {
             currentPokemonIndex = Math.max(currentPokemonIndex - 1, 0);
             showPokemonInfo();
@@ -59,7 +66,7 @@ async function getdata() {
     } catch (error) {
         console.error(error);
     }
-    
+
 }
 
 getdata();
