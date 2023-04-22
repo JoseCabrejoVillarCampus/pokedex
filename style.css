@@ -1,10 +1,10 @@
-#pokemon-data{
+/* #pokemon-data{
     margin-top: 20%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     justify-content:space-evenly;
-}
+}  */
 p{
     font-weight: bolder;
 }
@@ -14,4 +14,7 @@ button{
 }
 img{
     object-fit: contain;
+}
+#card-pokemon{
+    text-align: center;
 }
