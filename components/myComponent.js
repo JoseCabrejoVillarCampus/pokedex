@@ -7,20 +7,13 @@ export async function getdata() {
         const pokemonInfoElement = document.createElement('div');
         pokemonDataElement.appendChild(pokemonInfoElement);
 
-        async function showPokemonInfo() {
+        function hidePokemonInfo() {
+            const pokemonInfoSection = document.querySelector("#pokemon-info");
+            pokemonInfoSection.classList.remove("visible");
+        }
+
+        async function showPokemonInfo(pokemon) {
             try {
-                let pokemon = null;
-                let searchInput = document.getElementById('search-input').value.trim();
-
-                if (searchInput !== '') {
-                    const searchResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${searchInput}`);
-                    pokemon = await searchResponse.json();
-                } else {
-                    pokemon = data.results[currentPokemonIndex];
-                    const response = await fetch(pokemon.url);
-                    pokemon = await response.json();
-                }
-
                 mostrarpokimos(pokemon);
             } catch (error) {
                 console.error(error);
@@ -53,37 +46,13 @@ export async function getdata() {
             })
 
         }
-        
-        const prevButton = document.createElement('button');
-        prevButton.innerHTML = 'Anterior';
-        prevButton.addEventListener('click', () => {
-            currentPokemonIndex = Math.max(currentPokemonIndex - 1, 0);
-            showPokemonInfo();
-        });
-        pokemonDataElement.appendChild(prevButton);
 
-        const nextButton = document.createElement('button');
-        nextButton.innerHTML = 'Siguiente';
-        nextButton.addEventListener('click', () => {
-            currentPokemonIndex = Math.min(currentPokemonIndex + 1, data.results.length - 1);
-            showPokemonInfo();
-        });
-        pokemonDataElement.appendChild(nextButton);
+        for (let pokemon of data.results) {
+            const response = await fetch(pokemon.url);
+            const pokemonData = await response.json();
+            showPokemonInfo(pokemonData);
+        }
 
-        const searchContainer = document.createElement('div');
-        const searchInput = document.createElement('input');
-        const searchButton = document.createElement('button');
-
-        searchContainer.appendChild(searchInput);
-        searchContainer.appendChild(searchButton);
-
-        searchInput.placeholder = 'Buscar por nombre o ID';
-        searchButton.innerText = 'Buscar';
-        searchButton.addEventListener('click', showPokemonInfo);
-
-        pokemonDataElement.insertBefore(searchContainer, pokemonDataElement.firstChild);
-
-        showPokemonInfo();
     } catch (error) {
         console.error(error);
     }

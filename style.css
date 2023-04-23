@@ -1,20 +1,50 @@
-/* #pokemon-data{
-    margin-top: 20%;
+body {
+    background-image: url(./img/High_resolution_wallpaper_background_ID_77700115969.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+p {
+    font-weight: bolder;
+}
+
+button {
+    background-color: cornflowerblue;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+#card-pokemon {
+    text-align: center;
+}
+
+#but {
+    display: flex;
+    justify-content: center;
+    margin-top: 10%;
+}
+
+#next {
+    display: flex;
+    justify-content: center;
+    margin-top: 2%;
+}
+
+#card-pokemon {
+    border: solid black;
+    margin-left: 800px;
+    margin-right: 800px;
+    margin-top: 2%;
+    border-radius: 3%;
+    background-color: aquamarine;
+}
+
+#pokemon-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    justify-content:space-evenly;
-}  */
-p{
-    font-weight: bolder;
-}
-button{
-    background-color:cornflowerblue;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-}
-img{
-    object-fit: contain;
-}
-#card-pokemon{
-    text-align: center;
 }

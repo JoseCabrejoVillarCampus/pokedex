@@ -1,4 +1,4 @@
-let wsMyComponent ={
+const wsMyComponent ={
     showPoke(p1){
         return`
             <div id="card-pokemon">
