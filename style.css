@@ -1,5 +1,9 @@
+@font-face {
+    font-family: 'pokemon';
+    src: url(./font/pokemon-solid-cdnfonts/Pokemon\ Solid.ttf);
+}
 body {
-    background-image: url(./img/High_resolution_wallpaper_background_ID_77700115969.jpg);
+    background-image: linear-gradient(0deg,rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url(./img/High_resolution_wallpaper_background_ID_77700115969.jpg);
     background-repeat: repeat;
     background-size: contain;
 }
@@ -16,6 +20,9 @@ img {
 
 #card-pokemon {
     text-align: center;
+    font-family: 'pokemon';
+    color: azure;
+    text-shadow: 2px 2px 2px black;
 }
 
 #card-pokemon {
@@ -27,7 +34,7 @@ img {
     margin-right: 800px;
     margin-top: 2%;
     border-radius: 3%;
-    background-image: url(./img/images.jpeg);
+    background-image: linear-gradient(0deg,rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url(./img/images.jpeg);
     background-size: cover;
     width: 300px;
     margin: 10px;
@@ -36,5 +43,20 @@ img {
 #pokemon-data {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+}
+.form{
+    font-family: 'pokemon';
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 1%;
+    font-size: 30px;
+    color: azure;
+    text-shadow: 2px 2px 2px black;
+}
+#logo{
+    display: flex;
+    flex-direction: row;
     justify-content: center;
 }

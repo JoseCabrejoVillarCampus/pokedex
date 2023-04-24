@@ -14,11 +14,19 @@
 <body>
     <audio autoplay="autoplay" loop>
         <source src="./audio/1-01. Opening.mp3" type="audio/mpeg"></audio>
+    <div class="container" >
+        <div id="logo"><img  src="./img/International_Pokémon_logo.svg.png" alt=""></div> 
+    </div>
+    <div class="form">
+        <form id="formulario">
+            <label>
+                Busqueda por Nombre, Typo o ID:
+                <input type="text" id="buscar" name="buscar" placeholder="Ingresa Tipo, Nombre o Id"/>
+            </label>
+            <button type="submit">Atrapalo</button>
+        </form>
+    </div>
     <div class="container" id="cont">
-        <!-- <div class="container" id="but">
-        <div><input type="text" id="search-input" placeholder="Buscar pokemon...">
-            <button id="search-button">Buscar</button></div>
-        </div> -->
         <div class="conteiner" id="card">
             <div id="pokemon-data">
             </div>

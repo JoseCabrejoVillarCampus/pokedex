@@ -7,11 +7,6 @@ export async function getdata() {
         const pokemonInfoElement = document.createElement('div');
         pokemonDataElement.appendChild(pokemonInfoElement);
 
-        function hidePokemonInfo() {
-            const pokemonInfoSection = document.querySelector("#pokemon-info");
-            pokemonInfoSection.classList.remove("visible");
-        }
-
         async function showPokemonInfo(pokemon) {
             try {
                 mostrarpokimos(pokemon);
@@ -52,6 +47,26 @@ export async function getdata() {
             const pokemonData = await response.json();
             showPokemonInfo(pokemonData);
         }
+        const formulario = document.getElementById('formulario');
+        const buscar = document.getElementById('buscar');
+
+        formulario.addEventListener('click', async () => {
+            const searchQuery = buscar.value.trim();
+
+            if (searchQuery) {
+                const searchResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${searchQuery}`);
+                const searchData = await searchResponse.json();
+                pokemonDataElement.innerHTML = '';
+                showPokemonInfo(searchData);
+            } else {
+                pokemonDataElement.innerHTML = '';
+                for (let pokemon of data.results) {
+                    const response = await fetch(pokemon.url);
+                    const pokemonData = await response.json();
+                    showPokemonInfo(pokemonData);
+                }
+            }
+        });
 
     } catch (error) {
         console.error(error);
