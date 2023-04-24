@@ -60,3 +60,12 @@ img {
     flex-direction: row;
     justify-content: center;
 }
+
+#buscar{
+    border-radius: 2%;
+    border: none;
+    font-size: 3vh;
+    text-align: center;
+    background-color: black;
+    color: aliceblue;
+}

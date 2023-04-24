@@ -1,7 +1,7 @@
 export async function getdata() {
     let currentPokemonIndex = 0;
     try {
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=1281`);
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=151`);
         const data = await response.json();
         const pokemonDataElement = document.getElementById('pokemon-data');
         const pokemonInfoElement = document.createElement('div');
@@ -47,25 +47,28 @@ export async function getdata() {
             const pokemonData = await response.json();
             showPokemonInfo(pokemonData);
         }
-        const formulario = document.getElementById('formulario');
-        const buscar = document.getElementById('buscar');
-
-        formulario.addEventListener('click', async () => {
-            const searchQuery = buscar.value.trim();
-
-            if (searchQuery) {
-                const searchResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${searchQuery}`);
+        let formulario = document.getElementById('formulario')
+        console.log(formulario);
+        formulario.addEventListener('submit', async(e)=>{
+            e.preventDefault();
+            console.log();
+            let data1 = Object.fromEntries(new FormData(e.target));
+            let nuestro = data1.buscar;
+            console.log(nuestro);
+        
+            if (nuestro) {
+                const searchResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/` + nuestro);
                 const searchData = await searchResponse.json();
                 pokemonDataElement.innerHTML = '';
                 showPokemonInfo(searchData);
             } else {
                 pokemonDataElement.innerHTML = '';
                 for (let pokemon of data.results) {
-                    const response = await fetch(pokemon.url);
-                    const pokemonData = await response.json();
+                    const response =  fetch(pokemon.url);
+                    const pokemonData =  response.json();
                     showPokemonInfo(pokemonData);
                 }
-            }
+            } 
         });
 
     } catch (error) {
