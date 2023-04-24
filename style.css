@@ -1,49 +1,39 @@
 body {
     background-image: url(./img/High_resolution_wallpaper_background_ID_77700115969.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-repeat: repeat;
+    background-size: contain;
 }
 
 p {
     font-weight: bolder;
 }
 
-button {
-    background-color: cornflowerblue;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-}
 
 img {
     max-width: 100%;
-    height: auto;
+    height: 100%;
 }
 
 #card-pokemon {
     text-align: center;
 }
 
-#but {
-    display: flex;
-    justify-content: center;
-    margin-top: 10%;
-}
-
-#next {
-    display: flex;
-    justify-content: center;
-    margin-top: 2%;
-}
-
 #card-pokemon {
+    display: flex;
+    flex-direction: column;
+    vertical-align: middle;
     border: solid black;
     margin-left: 800px;
     margin-right: 800px;
     margin-top: 2%;
     border-radius: 3%;
-    background-color: aquamarine;
+    background-image: url(./img/images.jpeg);
+    background-size: cover;
+    width: 300px;
+    margin: 10px;
 }
 
-#pokemon-list {
+#pokemon-data {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
