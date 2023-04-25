@@ -1,5 +1,4 @@
 export async function getdata() {
-    let currentPokemonIndex = 0;
     try {
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=151`);
         const data = await response.json();
@@ -42,33 +41,60 @@ export async function getdata() {
 
         }
 
-        for (let pokemon of data.results) {
-            const response = await fetch(pokemon.url);
-            const pokemonData = await response.json();
-            showPokemonInfo(pokemonData);
+        let offset = 0;
+
+        const cargarDatos = async () => {
+            try {
+                const response = await fetch(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=20`);
+                const data = await response.json();
+                const pokemonDataElement = document.getElementById('pokemon-data');
+                pokemonDataElement.innerHTML = ''; // Eliminar los resultados anteriores
+
+                for (let pokemon of data.results) {
+                    const response = await fetch(pokemon.url);
+                    const pokemonData = await response.json();
+                    showPokemonInfo(pokemonData);
+                }
+            } catch (error) {
+                console.error(error);
+            }
         }
+
+        const anterior = document.getElementById('but1');
+        anterior.addEventListener('click', async () => {
+            offset -= 20; // Actualizar el offset
+            await cargarDatos();
+        });
+
+        const siguiente = document.getElementById('but');
+        siguiente.addEventListener('click', async () => {
+            offset += 20; // Actualizar el offset
+            await cargarDatos();
+        });
+
+        // Cargar los primeros 20 resultados al cargar la página
+        cargarDatos();
+
         let formulario = document.getElementById('formulario')
-        console.log(formulario);
-        formulario.addEventListener('submit', async(e)=>{
+        formulario.addEventListener('submit', async (e) => {
             e.preventDefault();
-            console.log();
             let data1 = Object.fromEntries(new FormData(e.target));
             let nuestro = data1.buscar;
-            console.log(nuestro);
-        
+            formulario.reset()
+
             if (nuestro) {
-                const searchResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/` + nuestro);
+                const searchResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${nuestro}`);
                 const searchData = await searchResponse.json();
                 pokemonDataElement.innerHTML = '';
                 showPokemonInfo(searchData);
             } else {
                 pokemonDataElement.innerHTML = '';
                 for (let pokemon of data.results) {
-                    const response =  fetch(pokemon.url);
-                    const pokemonData =  response.json();
+                    const response = fetch(pokemon.url);
+                    const pokemonData = response.json();
                     showPokemonInfo(pokemonData);
                 }
-            } 
+            }
         });
 
     } catch (error) {
