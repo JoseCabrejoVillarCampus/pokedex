@@ -16,17 +16,14 @@ const wsMyComponent ={
         return`
         <div id="card-pokemon">
         <h3>Stats</h3>
+        <h3>${p1.name}</h3>
+        <p>Id:# ${p1.id}</p>
         <p>${p1.stats[0].stat.name} : ${p1.stats[0].base_stat}</p>
         <p>${p1.stats[1].stat.name} : ${p1.stats[1].base_stat}</p>
         <p>${p1.stats[2].stat.name} : ${p1.stats[2].base_stat}</p>
         <p>${p1.stats[3].stat.name} : ${p1.stats[3].base_stat}</p>
         <p>${p1.stats[4].stat.name} : ${p1.stats[4].base_stat}</p>
         `
-    },
-    showAll(p1) {
-        const pokeHtml = this.showPoke(p1);
-        const statsHtml = this.showStats(p1);
-        return pokeHtml + statsHtml;
     }
 
 }

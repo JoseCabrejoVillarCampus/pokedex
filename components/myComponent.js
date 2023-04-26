@@ -9,6 +9,7 @@ export async function getdata() {
         async function showPokemonInfo(pokemon) {
             try {
                 mostrarpokimos(pokemon);
+                mostrarstats(pokemon);
             } catch (error) {
                 console.error(error);
             }
@@ -19,26 +20,50 @@ export async function getdata() {
                 type: "module"
             });
 
-            //enviamos un mensaje el worker
-            ws.postMessage({
-                module: "showPoke",
-                data: pokemons
-            });
+        ws.postMessage({
+                    module: "showPoke",
+                    data: pokemons
+                });
             let id = ["#pokemon-data"];
-            let count = 0;
-            //esto es lo que llega del worker
+                let count = 0;
+
             ws.addEventListener("message", (e) => {
 
                 //estamos parseando lo que trae el evento (mensaje)
                 let doc = new DOMParser().parseFromString(e.data, "text/html");
 
                 //insertamos en nuestro index, en el selector #pokemon-data
+                if(pokemons.sprites.other.dream_world.front_default)
                 document.querySelector(id[count]).append(...doc.body.children);
-
+                
                 //finalizamos el worker
-                (id.length - 1 == count) ? ws.terminate(): count++;
+                /* (id.length - 1 == count) ? ws.terminate(): count++; */
             })
+        }
+        function mostrarstats(pokemons) {
+            const WS = new Worker("./storage/wsMyComponent.js", {
+                type: "module"
+            });
+            document.querySelector("#btnStates").addEventListener("click", (e)=>{
+                document.querySelector(id[count]).innerHTML = ""
+                WS.postMessage({
+                    module: "showStats",
+                    data: pokemons
+                });
+            })
+            let id = ["#pokemon-data"];
+                let count = 0;
 
+            WS.addEventListener("message", (e) => {
+
+                //estamos parseando lo que trae el evento (mensaje)
+                let doc = new DOMParser().parseFromString(e.data, "text/html");
+
+                document.querySelector(id[count]).append(...doc.body.children);
+                
+                //finalizamos el worker
+                /* (id.length - 1 == count) ? WS.terminate(): count++; */
+            })
         }
 
         let offset = 0;
@@ -113,14 +138,14 @@ export async function getdata() {
                 const searchResponse1 = await fetch(`https://pokeapi.co/api/v2/type/${tipo}`);
                 const searchData1 = await searchResponse1.json();
                 const pokemonList = searchData1.pokemon.map(p => p.pokemon.name);
+                pokemonDataElement.innerHTML = '';
                 for (let pokemon of searchData1.pokemon) {
                     const response = await fetch(pokemon.pokemon.url);
-                    const pokemonData3 = await response.json();
-                    // Haz algo con la información del pokémon, como mostrarlo en la pantalla.
+                    const pokemonData2 = await response.json();
+                    showPokemonInfo(pokemonData2);
                 }
                 console.log(pokemonList);
-                pokemonDataElement.innerHTML = '';
-                showPokemonInfo(pokemonData3);
+                showPokemonInfo(pokemonData2);
             } else {
                 pokemonDataElement.innerHTML = '';
                 for (let pokemon of data.results) {
