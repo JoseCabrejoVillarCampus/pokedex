@@ -31,11 +31,9 @@ export async function getdata() {
 
                 //estamos parseando lo que trae el evento (mensaje)
                 let doc = new DOMParser().parseFromString(e.data, "text/html");
-
                 //insertamos en nuestro index, en el selector #pokemon-data
                 if(pokemons.sprites.other.dream_world.front_default)
                 document.querySelector(id[count]).append(...doc.body.children);
-                
                 //finalizamos el worker
                 /* (id.length - 1 == count) ? ws.terminate(): count++; */
             })
@@ -44,7 +42,7 @@ export async function getdata() {
             const WS = new Worker("./storage/wsMyComponent.js", {
                 type: "module"
             });
-            document.querySelector("#btnStates").addEventListener("click", (e)=>{
+            document.querySelector("#btnStates").addEventListener('click', (e)=>{
                 document.querySelector(id[count]).innerHTML = ""
                 WS.postMessage({
                     module: "showStats",
@@ -113,10 +111,10 @@ export async function getdata() {
             formulario.reset()
 
             if (nuestro) {
+                pokemonDataElement.innerHTML = '';
                 const searchResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${nuestro}`);
                 const searchData = await searchResponse.json();
-                pokemonDataElement.innerHTML = '';
-                showPokemonInfo(searchData);
+                showPokemonInfo(searchData);    
             } else {
                 pokemonDataElement.innerHTML = '';
                 for (let pokemon of data.results) {

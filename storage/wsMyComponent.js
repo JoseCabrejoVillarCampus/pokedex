@@ -16,6 +16,7 @@ const wsMyComponent ={
         return`
         <div id="card-pokemon">
         <h3>Stats</h3>
+        <a><img src="${p1.sprites.versions['generation-v']['black-white'].animated.front_default}" alt="${p1.name}"></a>
         <h3>${p1.name}</h3>
         <p>Id:# ${p1.id}</p>
         <p>${p1.stats[0].stat.name} : ${p1.stats[0].base_stat}</p>
