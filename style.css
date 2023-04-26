@@ -38,6 +38,7 @@ img {
     background-size: cover;
     width: 300px;
     margin: 10px;
+    box-shadow: 0 0 20px rgb(83, 197, 217);
 }
 
 #pokemon-data {
