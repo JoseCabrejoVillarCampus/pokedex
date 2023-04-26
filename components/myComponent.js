@@ -20,7 +20,10 @@ export async function getdata() {
             });
 
             //enviamos un mensaje el worker
-            ws.postMessage({module: "showPoke",data: pokemons});
+            ws.postMessage({
+                module: "showPoke",
+                data: pokemons
+            });
             let id = ["#pokemon-data"];
             let count = 0;
             //esto es lo que llega del worker
@@ -107,16 +110,23 @@ export async function getdata() {
             formularioTipo.reset()
 
             if (tipo) {
-                const searchResponse = await fetch(`https://pokeapi.co/api/v2/type/${tipo}`);
-                const searchData1 = await searchResponse.json();
+                const searchResponse1 = await fetch(`https://pokeapi.co/api/v2/type/${tipo}`);
+                const searchData1 = await searchResponse1.json();
+                const pokemonList = searchData1.pokemon.map(p => p.pokemon.name);
+                for (let pokemon of searchData1.pokemon) {
+                    const response = await fetch(pokemon.pokemon.url);
+                    const pokemonData3 = await response.json();
+                    // Haz algo con la información del pokémon, como mostrarlo en la pantalla.
+                }
+                console.log(pokemonList);
                 pokemonDataElement.innerHTML = '';
-                showPokemonInfo(searchData1);
+                showPokemonInfo(pokemonData3);
             } else {
                 pokemonDataElement.innerHTML = '';
                 for (let pokemon of data.results) {
                     const response = fetch(pokemon.url);
-                    const pokemonData = response.json();
-                    showPokemonInfo(pokemonData);
+                    const pokemonData1 = response.json();
+                    showPokemonInfo(pokemonData1);
                 }
             }
         });
