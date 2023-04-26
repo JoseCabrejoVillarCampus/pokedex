@@ -51,7 +51,22 @@ export async function getdata() {
             })
             let id = ["#pokemon-data"];
                 let count = 0;
-
+                const cargarDatos = async () => {
+                    try {
+                        const response = await fetch(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=20`);
+                        const data = await response.json();
+                        const pokemonDataElement = document.getElementById('pokemon-data');
+                        pokemonDataElement.innerHTML = ''; // Eliminar los resultados anteriores
+        
+                        for (let pokemon of data.results) {
+                            const response = await fetch(pokemon.url);
+                            const pokemonData = await response.json();
+                            showPokemonInfo(pokemonData);
+                        }
+                    } catch (error) {
+                        console.error(error);
+                    }
+                }
             WS.addEventListener("message", (e) => {
 
                 //estamos parseando lo que trae el evento (mensaje)
@@ -66,6 +81,7 @@ export async function getdata() {
 
         let offset = 0;
 
+    
         const cargarDatos = async () => {
             try {
                 const response = await fetch(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=20`);
