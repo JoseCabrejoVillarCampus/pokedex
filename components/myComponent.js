@@ -20,10 +20,7 @@ export async function getdata() {
             });
 
             //enviamos un mensaje el worker
-            ws.postMessage({
-                module: "showPoke",
-                data: pokemons
-            });
+            ws.postMessage({module: "showPoke",data: pokemons});
             let id = ["#pokemon-data"];
             let count = 0;
             //esto es lo que llega del worker
@@ -75,6 +72,11 @@ export async function getdata() {
         // Cargar los primeros 20 resultados al cargar la página
         cargarDatos();
 
+        /* const stats= document.querySelector('#pokemon-data')
+        stats.addEventListener('click',async()=>{
+
+        }) */
+
         let formulario = document.getElementById('formulario')
         formulario.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -87,6 +89,28 @@ export async function getdata() {
                 const searchData = await searchResponse.json();
                 pokemonDataElement.innerHTML = '';
                 showPokemonInfo(searchData);
+            } else {
+                pokemonDataElement.innerHTML = '';
+                for (let pokemon of data.results) {
+                    const response = fetch(pokemon.url);
+                    const pokemonData = response.json();
+                    showPokemonInfo(pokemonData);
+                }
+            }
+        });
+
+        let formularioTipo = document.getElementById('formularioTipo')
+        formularioTipo.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            let data2 = Object.fromEntries(new FormData(e.target));
+            let tipo = data2.buscar1;
+            formularioTipo.reset()
+
+            if (tipo) {
+                const searchResponse = await fetch(`https://pokeapi.co/api/v2/type/${tipo}`);
+                const searchData1 = await searchResponse.json();
+                pokemonDataElement.innerHTML = '';
+                showPokemonInfo(searchData1);
             } else {
                 pokemonDataElement.innerHTML = '';
                 for (let pokemon of data.results) {
