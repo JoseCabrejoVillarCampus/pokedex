@@ -81,3 +81,8 @@ img {
     font-size: 30px;
 }
 
+#todo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+} 
